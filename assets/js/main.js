@@ -52,11 +52,12 @@ $(document).ready(function () {
   })
   $("body").delegate("#btnCapNhat", "click", function () {
     var tK = layThongTin();
-
-    danhSachTK.mangTaiKhoan[viTri] = tK;
-    setLocalStorage();
-
-    taoBang(danhSachTK.mangTaiKhoan);
+    var isValid = kiemTraHopLe();
+    if (isValid == true) {
+      danhSachTK.mangTaiKhoan[viTri] = tK;
+      setLocalStorage();
+      taoBang(danhSachTK.mangTaiKhoan);
+    }
   })
   $("#btnThemNguoiDung").click(function () {
     giaTri("", "", "", "", "");
@@ -68,20 +69,23 @@ $(document).ready(function () {
   })
   $("body").delegate("#btnThemMoi", "click", function () {
     var tK = layThongTin();
-    var isValid = true;
-
-    isValid &= validation.kiemTraTaiKhoan("#TaiKhoan", "#spanTaiKhoan", "Vui lòng nhập đúng định dạng")
-      && validation.kiemTraTonTai("#TaiKhoan", "#spanTaiKhoan", danhSachTK.mangTaiKhoan, "Đã tồn tại");
-    isValid &= validation.kiemTraMatKhau("#MatKhau", "#spanMatKhau", "Vui lòng nhập đúng định dạng");
-    isValid &= validation.kiemTraHoTen("#HoTen", "#spanHoTen", "Vui lòng nhập đúng họ tên");
-    isValid &= validation.kiemTraEmail("#Email", "#spanEmail", "Vui lòng nhập đúng email");
-    isValid &= validation.kiemTraSDT("#SoDienThoai", "#spanSDT", "Vui lòng nhập đúng số điện thoại");
+    var isValid = kiemTraHopLe();
     if (isValid == true) {
       danhSachTK.themTaiKhoan(tK);
       taoBang(danhSachTK.mangTaiKhoan);
       setLocalStorage();
     }
   })
+  function kiemTraHopLe() {
+    var isValid = true;
+    isValid &= validation.kiemTraTaiKhoan("#TaiKhoan", "#spanTaiKhoan", "Vui lòng nhập đúng định dạng")
+      && validation.kiemTraTonTai("#TaiKhoan", "#spanTaiKhoan", danhSachTK.mangTaiKhoan, "Đã tồn tại");
+    isValid &= validation.kiemTraMatKhau("#MatKhau", "#spanMatKhau", "Vui lòng nhập đúng định dạng");
+    isValid &= validation.kiemTraHoTen("#HoTen", "#spanHoTen", "Vui lòng nhập đúng họ tên");
+    isValid &= validation.kiemTraEmail("#Email", "#spanEmail", "Vui lòng nhập đúng email");
+    isValid &= validation.kiemTraSDT("#SoDienThoai", "#spanSDT", "Vui lòng nhập đúng số điện thoại");
+    return isValid;
+  }
   function giaTri(taiKhoan, hoTen, matKhau, email, soDienThoai) {
     $("#TaiKhoan").val(taiKhoan);
     $("#HoTen").val(hoTen);
