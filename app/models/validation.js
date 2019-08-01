@@ -2,23 +2,6 @@ function Validation() {
     this.kiemTraTaiKhoan = function (input, span, thongBao) {
         return this.regex("^[a-z0-9_-]{3,16}$", input, span, thongBao);
     }
-    this.kiemTraTonTai = function (input, span, mangTK, thongBao) {
-        var isValid = true;
-        var value = $(input).val();
-        mangTK.map(function (item) {
-            if (item.taiKhoan == value) {
-                isValid = false;
-            }
-        })
-        if (isValid == false) {
-            $(span).css("display", "block");
-            $(span).html(thongBao);
-        }
-        else {
-            $(span).html("");
-        }
-        return isValid;
-    }
     this.kiemTraMatKhau = function (input, span, thongBao) {
         return this.regex("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", input, span, thongBao);
     }

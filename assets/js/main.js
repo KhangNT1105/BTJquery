@@ -41,6 +41,7 @@ $(document).ready(function () {
   })
   $("body").delegate("#btnSua", "click", function (event) {
     var title = "Sửa người dùng";
+    $("#TaiKhoan").attr("disabled","1");
     $(".modal-title").html(title);
     var btnCapNhat = "<button class='btn btn-success' id='btnCapNhat'>Cập nhật</button>"
     $(".modal-footer").html(btnCapNhat);
@@ -61,6 +62,7 @@ $(document).ready(function () {
   })
   $("#btnThemNguoiDung").click(function () {
     giaTri("", "", "", "", "");
+$("#TaiKhoan").prop("disabled",false);
     var title = "Thêm người dùng";
     $(".modal-title").html(title);
     var btnThemMoi = "<button class='btn btn-danger' id='btnThemMoi'>Thêm mới</button>"
@@ -78,9 +80,8 @@ $(document).ready(function () {
   })
   function kiemTraHopLe() {
     var isValid = true;
-    isValid &= validation.kiemTraTaiKhoan("#TaiKhoan", "#spanTaiKhoan", "Vui lòng nhập đúng định dạng")
-      && validation.kiemTraTonTai("#TaiKhoan", "#spanTaiKhoan", danhSachTK.mangTaiKhoan, "Đã tồn tại");
-    isValid &= validation.kiemTraMatKhau("#MatKhau", "#spanMatKhau", "Vui lòng nhập đúng định dạng");
+    isValid &= validation.kiemTraTaiKhoan("#TaiKhoan", "#spanTaiKhoan", "Vui lòng nhập tài khoãn đúng định dạng")
+    isValid &= validation.kiemTraMatKhau("#MatKhau", "#spanMatKhau", "Vui lòng nhập mật khảu đúng định dạng");
     isValid &= validation.kiemTraHoTen("#HoTen", "#spanHoTen", "Vui lòng nhập đúng họ tên");
     isValid &= validation.kiemTraEmail("#Email", "#spanEmail", "Vui lòng nhập đúng email");
     isValid &= validation.kiemTraSDT("#SoDienThoai", "#spanSDT", "Vui lòng nhập đúng số điện thoại");
@@ -112,7 +113,7 @@ $(document).ready(function () {
     danhSachTKTimKiem = [];
     danhSachTKTimKiem = (danhSachTK.mangTaiKhoan).filter(function (item) {
 
-      return item.taiKhoan.toLowerCase().replace(/\s/g, '').indexOf(keyword) != -1;
+      return item.hoTen.toLowerCase().replace(/\s/g, '').indexOf(keyword) != -1;
     })
     taoBang(danhSachTKTimKiem);
   })
